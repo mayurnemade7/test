@@ -1,0 +1,15 @@
+
+[pivotal-tracker]
+project-id = 2333386
+
+[project]
+project-name = Test Personal
+project-manager = 10
+project-manager-email = mayurnemade7@gmail.com
+
+[platform]
+platform-name = android
+
+[spec]
+spec-path = 
+
