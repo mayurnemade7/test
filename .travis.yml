@@ -17,11 +17,18 @@ android:
     - extra-google-google_play_services
     - extra-google-m2repository
     - extra-android-m2repository
-    - platform-tools
-    - tools
-    - sys-img-armeabi-v7a-android-21
-    licenses:
-      - '.+'
+
+    # Specify at least one system image,
+    # if you need to run emulator(s) during your tests
+script:
+  #Default Value for APP_BUILD_ENV
+  - npm run test:single
+  - APP_BUILD_ENV=DEV
+
+  - if [ "$TRAVIS_BRANCH" = "develop" ]; then
+    echo "develop Scheme Selected.";
+    TERM=dumb ./gradlew assembleDEVRelease;
+    fi
 
 notifications:
   email:
@@ -30,35 +37,14 @@ notifications:
     on_success: always
     on_failure: always
 
-script:
-  #Default Value for APP_BUILD_ENV
-  - APP_BUILD_ENV=DEV
-
-  - if [ "$TRAVIS_BRANCH" = "develop" ]; then
-    echo "develop Scheme Selected.";
-    TERM=dumb ./gradlew assembleDEVRelease;
-  elif [ "$TRAVIS_BRANCH" = "qa" ]; then
-    APP_BUILD_ENV=QA;
-    echo "QA Scheme Selected.";
-    TERM=dumb ./gradlew assembleQARelease;
-  fi
-
 before_install:
   - chmod +x gradlew
   - chmod +x scripts/upload.sh
-  - export JAVA8_HOME=/usr/lib/jvm/java-8-oracle
-  - export JAVA_HOME=$JAVA8_HOME
-
 after_success:
   - ./scripts/upload.sh
-
 env:
   global:
-  MALLOC_ARENA_MAX=2
   - OUTPUTDIR="./app/build/outputs/apk"
   - DEV_HOCKEY_APP_ID="0a496a61dace4725b9e096a61029188e"
   - DEV_HOCKEY_APP_TOKEN="c9f960ebec42e26dd48d7df6b664bc0f"
   - DEV_APKNAME="app-DEV-release.apk"
-  - QA_HOCKEY_APP_ID="0a496a61dace4725b9e096a61029188e"
-  - QA_HOCKEY_APP_TOKEN="c9f960ebec42e26dd48d7df6b664bc0f"
-  - QA_APKNAME="app-QA-release.apk"
