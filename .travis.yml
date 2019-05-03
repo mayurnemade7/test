@@ -20,15 +20,7 @@ android:
 
     # Specify at least one system image,
     # if you need to run emulator(s) during your tests
-script:
-  #Default Value for APP_BUILD_ENV
-  - npm run test:single
-  - APP_BUILD_ENV=DEV
 
-  - if [ "$TRAVIS_BRANCH" = "develop" ]; then
-    echo "develop Scheme Selected.";
-    TERM=dumb ./gradlew assembleDEVRelease;
-    fi
 
 notifications:
   email:
@@ -42,6 +34,15 @@ before_install:
   - chmod +x scripts/upload.sh
   - export JAVA8_HOME=/usr/lib/jvm/java-8-oracle
   - export JAVA_HOME=$JAVA8_HOME
+script:
+  #Default Value for APP_BUILD_ENV
+  - npm run test:single
+  - APP_BUILD_ENV=DEV
+
+  - if [ "$TRAVIS_BRANCH" = "develop" ]; then
+    echo "develop Scheme Selected.";
+    TERM=dumb ./gradlew assembleDEVRelease;
+    fi
 after_success:
   - ./scripts/upload.sh
 env:
