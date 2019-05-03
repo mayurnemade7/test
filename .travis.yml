@@ -20,13 +20,39 @@ android:
     - platform-tools
     - tools
     - sys-img-armeabi-v7a-android-21
+    licenses:
+      - '.+'
 
+notifications:
+  email:
+    recipients:
+      - mayurnemade7@gmail.com
+    on_success: always
+    on_failure: always
 
-    # Specify at least one system image,
-    # if you need to run emulator(s) during your tests
-# Emulator Management: Create, Start and Wait
-before_script:
-  - echo no | android create avd --force -n test -t android-28 --abi armeabi-v7a -c 100M
-  - emulator -avd test -no-audio -no-window &
-  - android-wait-for-emulator
-  - adb shell input keyevent 82 &
+script:
+  #Default Value for APP_BUILD_ENV
+  - APP_BUILD_ENV=DEV
+
+  - if [ "$TRAVIS_BRANCH" = "develop" ]; then
+    echo "develop Scheme Selected.";
+    TERM=dumb ./gradlew assembleDEVRelease;
+  elif [ "$TRAVIS_BRANCH" = "qa" ]; then
+    APP_BUILD_ENV=QA;
+    echo "QA Scheme Selected.";
+    TERM=dumb ./gradlew assembleQARelease;
+  fi
+
+after_success:
+  - ./scripts/upload.sh
+
+env:
+  global:
+    MALLOC_ARENA_MAX=2
+    - OUTPUTDIR="./app/build/outputs/apk"
+    - DEV_HOCKEY_APP_ID="0a496a61dace4725b9e096a61029188e"
+    - DEV_HOCKEY_APP_TOKEN="c9f960ebec42e26dd48d7df6b664bc0f"
+    - DEV_APKNAME="app-DEV-release.apk"
+    - QA_HOCKEY_APP_ID="0a496a61dace4725b9e096a61029188e"
+    - QA_HOCKEY_APP_TOKEN="c9f960ebec42e26dd48d7df6b664bc0f"
+    - QA_APKNAME="app-QA-release.apk"

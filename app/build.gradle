@@ -13,6 +13,8 @@ android {
         versionCode 1
         versionName "1.0"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+        manifestPlaceholders = [HOCKEYAPP_APP_ID: "0a496a61dace4725b9e096a61029188e"]
+
     }
     buildTypes {
         release {
@@ -20,7 +22,42 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
     }
+    productFlavors {
+        def STRING = "String"
+        def HOCKEYAPPID = "hocketAppId"
+        DEV {
+            dimension = 'test'
+            minSdkVersion 21
+            applicationId = "com.example.myapplication.DEV"
+
+            targetSdkVersion 28
+            maxSdkVersion 28
+            buildConfigField STRING, HOCKEYAPPID, "\"0a496a61dace4725b9e096a61029188e\""
+        }
+        QA {
+            dimension = 'test'
+            minSdkVersion 21
+            applicationId = "com.example.myapplication.QA"
+
+            targetSdkVersion 28
+            maxSdkVersion 28
+            buildConfigField STRING, HOCKEYAPPID, "\"0a496a61dace4725b9e096a61029188e\""
+        }
+        /*DEV {
+            // Assigns this product flavor to the "version" flavor dimension.
+            // This property is optional if you are using only one dimension.
+
+            applicationId = "com.example.myapplication.DEV"
+            buildConfigField STRING, HOCKEYAPPID, "\"0a496a61dace4725b9e096a61029188e\""
+        }
+        QA {
+
+            applicationId = "com.example.myapplication.QA"
+            buildConfigField STRING, HOCKEYAPPID, "\"0a496a61dace4725b9e096a61029188e\""
+        }*/
+    }
     buildToolsVersion = '28.0.3'
+    flavorDimensions 'test'
 }
 
 dependencies {
@@ -31,4 +68,5 @@ dependencies {
     testImplementation 'junit:junit:4.12'
     androidTestImplementation 'com.android.support.test:runner:1.0.2'
     androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.2'
+    implementation 'net.hockeyapp.android:HockeySDK:5.1.1'
 }
