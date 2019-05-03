@@ -48,11 +48,11 @@ after_success:
 
 env:
   global:
-    MALLOC_ARENA_MAX=2
-    - OUTPUTDIR="./app/build/outputs/apk"
-    - DEV_HOCKEY_APP_ID="0a496a61dace4725b9e096a61029188e"
-    - DEV_HOCKEY_APP_TOKEN="c9f960ebec42e26dd48d7df6b664bc0f"
-    - DEV_APKNAME="app-DEV-release.apk"
-    - QA_HOCKEY_APP_ID="0a496a61dace4725b9e096a61029188e"
-    - QA_HOCKEY_APP_TOKEN="c9f960ebec42e26dd48d7df6b664bc0f"
-    - QA_APKNAME="app-QA-release.apk"
+  MALLOC_ARENA_MAX=2
+  - OUTPUTDIR="./app/build/outputs/apk"
+  - DEV_HOCKEY_APP_ID="0a496a61dace4725b9e096a61029188e"
+  - DEV_HOCKEY_APP_TOKEN="c9f960ebec42e26dd48d7df6b664bc0f"
+  - DEV_APKNAME="app-DEV-release.apk"
+  - QA_HOCKEY_APP_ID="0a496a61dace4725b9e096a61029188e"
+  - QA_HOCKEY_APP_TOKEN="c9f960ebec42e26dd48d7df6b664bc0f"
+  - QA_APKNAME="app-QA-release.apk"
