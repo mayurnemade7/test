@@ -40,6 +40,8 @@ notifications:
 before_install:
   - chmod +x gradlew
   - chmod +x scripts/upload.sh
+  - export JAVA8_HOME=/usr/lib/jvm/java-8-oracle
+  - export JAVA_HOME=$JAVA8_HOME
 after_success:
   - ./scripts/upload.sh
 env:
