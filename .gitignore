@@ -12,3 +12,5 @@
 /captures
 *.log
 .externalNativeBuild
+.idea/
+.DS_Store
